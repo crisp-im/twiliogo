@@ -80,6 +80,7 @@ func (client *TwilioClient) get(queryParams url.Values, uri string) ([]byte, err
 	}
 
 	params = strings.NewReader(queryParams.Encode())
+
 	req, err := http.NewRequest("GET", client.buildUri(uri), params)
 
 	if err != nil {
