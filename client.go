@@ -16,7 +16,7 @@ type Client interface {
 	AccountSid() string
 	AuthToken() string
 	RootUrl() string
-	SetClient(httpClient *http.Client)
+	SetHttpClient(httpClient *http.Client)
 	get(url.Values, string) ([]byte, error)
 	post(url.Values, string) ([]byte, error)
 	delete(string) error
@@ -36,7 +36,7 @@ func NewClient(accountSid string, authToken string) *TwilioClient {
 	return &TwilioClient{accountSid, authToken, rootUrl, nil}
 }
 
-func(client *TwilioClient) SetClient(httpClient *http.Client) {
+func(client *TwilioClient) SetHttpClient(httpClient *http.Client) {
 	client.httpClient = httpClient
 }
 
