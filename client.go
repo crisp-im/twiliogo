@@ -51,6 +51,10 @@ func (client *TwilioClient) post(values url.Values, uri string) ([]byte, error) 
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	httpClient := &http.Client{}
 
+	if client.httpClient != nil {
+		httpClient = client.httpClient
+	}
+
 	res, err := httpClient.Do(req)
 
 	if err != nil {
@@ -96,6 +100,10 @@ func (client *TwilioClient) get(queryParams url.Values, uri string) ([]byte, err
 	req.SetBasicAuth(client.AccountSid(), client.AuthToken())
 	httpClient := &http.Client{}
 
+	if client.httpClient != nil {
+		httpClient = client.httpClient
+	}
+
 	res, err := httpClient.Do(req)
 
 	if err != nil {
@@ -133,6 +141,10 @@ func (client *TwilioClient) delete(uri string) error {
 	req.SetBasicAuth(client.AccountSid(), client.AuthToken())
 	httpClient := &http.Client{}
 
+	if client.httpClient != nil {
+		httpClient = client.httpClient
+	}
+	
 	res, err := httpClient.Do(req)
 
 	if err != nil {
