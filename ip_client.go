@@ -17,5 +17,5 @@ var _ Client = &TwilioIPMessagingClient{}
 // NewIPMessagingClient creates a new Twilio IP Messaging client.
 func NewIPMessagingClient(accountSid, authToken string) *TwilioIPMessagingClient {
 	rootUrl := IP_MESSAGING_ROOT + "/" + IP_MESSAGING_VERSION
-	return &TwilioIPMessagingClient{TwilioClient{accountSid, authToken, rootUrl}}
+	return &TwilioIPMessagingClient{TwilioClient{accountSid, authToken, rootUrl, nil}}
 }

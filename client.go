@@ -16,22 +16,28 @@ type Client interface {
 	AccountSid() string
 	AuthToken() string
 	RootUrl() string
+	SetClient(httpClient *http.Client)
 	get(url.Values, string) ([]byte, error)
 	post(url.Values, string) ([]byte, error)
 	delete(string) error
 }
 
 type TwilioClient struct {
-	accountSid string
-	authToken  string
-	rootUrl    string
+	accountSid  string
+	authToken   string
+	rootUrl     string
+	httpClient  *http.Client
 }
 
 var _ Client = &TwilioClient{}
 
-func NewClient(accountSid, authToken string) *TwilioClient {
+func NewClient(accountSid string, authToken string) *TwilioClient {
 	rootUrl := ROOT + "/" + VERSION + "/Accounts/" + accountSid
-	return &TwilioClient{accountSid, authToken, rootUrl}
+	return &TwilioClient{accountSid, authToken, rootUrl, nil}
+}
+
+func(client *TwilioClient) SetClient(httpClient *http.Client) {
+	client.httpClient = httpClient
 }
 
 func (client *TwilioClient) post(values url.Values, uri string) ([]byte, error) {
@@ -152,6 +158,10 @@ func (client *TwilioClient) AuthToken() string {
 
 func (client *TwilioClient) RootUrl() string {
 	return client.rootUrl
+}
+
+func (client *TwilioClient) NewRootUrl(newRoot string) {
+	client.rootUrl = newRoot
 }
 
 func (client *TwilioClient) buildUri(parts ...string) string {
